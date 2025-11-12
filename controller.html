@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Phone Controller</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><text y=%2250%%22 font-size=%2252%22>🎮</text></svg>">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #eee;
+      text-align: center;
+      padding: 2rem;
+    }
+    button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      margin: 1rem;
+      font-size: 1.2rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover { transform: scale(1.05); }
+    #start.active { background: #00ff88; color: #111; }
+    #status { margin-top: 1rem; font-size: 1.1rem; }
+    #sensor-output {
+      margin-top: 1.5rem;
+      font-family: monospace;
+      background: #222;
+      padding: 1rem;
+      border-radius: 8px;
+      display: inline-block;
+      text-align: left;
+      min-width: 220px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎮 Phone Controller</h2>
+  <button id="start">Start Sending Sensors</button>
+  <button id="stop">Stop</button>
+  <p id="status">🔴 Disconnected</p>
+
+  <div id="sensor-output">
+    x: 0<br>y: 0<br>z: 0
+  </div>
+
+  <script>
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const socket = new WebSocket(`${protocol}://${window.location.hostname}:3000`);
+
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
+    const statusEl = document.getElementById('status');
+    const outputEl = document.getElementById('sensor-output');
+    let active = false;
+
+    socket.onopen = () => {
+      statusEl.textContent = '🟢 Connected';
+      socket.send(JSON.stringify({ type: 'register', role: 'controller' }));
+      console.log('✅ WebSocket connected');
+    };
+
+    socket.onerror = err => {
+      statusEl.textContent = '❌ Connection error';
+      console.error(err);
+    };
+
+    socket.onclose = () => {
+      statusEl.textContent = '🔌 Disconnected';
+      startBtn.classList.remove('active');
+      active = false;
+    };
+
+    startBtn.onclick = async () => {
+      if (active) return;
+      active = true;
+      startBtn.classList.add('active');
+      statusEl.textContent = '🟢 Sending sensors...';
+
+      try {
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+          const permission = await DeviceMotionEvent.requestPermission();
+          if (permission !== 'granted') throw new Error('Permission denied');
+        }
+        window.addEventListener('devicemotion', sendMotion);
+        if (navigator.vibrate) navigator.vibrate(100);
+      } catch (e) {
+        statusEl.textContent = '❌ Permission denied';
+        console.error(e);
+        active = false;
+        startBtn.classList.remove('active');
+      }
+    };
+
+    stopBtn.onclick = () => {
+      active = false;
+      startBtn.classList.remove('active');
+      window.removeEventListener('devicemotion', sendMotion);
+      statusEl.textContent = '⏸️ Stopped';
+    };
+
+    function sendMotion(event) {
+      if (!active) return;
+      const acc = event.accelerationIncludingGravity || {};
+      const data = {
+        x: acc.x?.toFixed(2) ?? 0,
+        y: acc.y?.toFixed(2) ?? 0,
+        z: acc.z?.toFixed(2) ?? 0
+      };
+      outputEl.innerHTML = `x: ${data.x}<br>y: ${data.y}<br>z: ${data.z}`;
+      socket.send(JSON.stringify({ type: 'sensorData', payload: data }));
+    }
+  </script>
+</body>
+</html>

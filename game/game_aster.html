@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroid-like</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div class="status" id="status">Disconnected</div>
+    
+    <canvas id="gameCanvas"></canvas>
+    
+    <div class="game-over" id="gameOver">
+        <h2>GAME OVER</h2>
+        <button onclick="restartGame()">Restart</button>
+    </div>
+    
+    <div class="info">
+        <p>Connect phone: https://[your-ip]:3000/controller.html</p>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
