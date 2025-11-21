@@ -18,6 +18,6 @@ suggesting standard WebXR code that is incompatible with iPhones, failing to men
 I wasted hours debugging its 'technically correct' code before manual research revealed I needed to totally switch to
 Apple's native Quick Look and .usdz files.
 
-3) As a management engineer with an ML background, I see AR as a useful instrument.
+3) As a management engineer, I see AR as a useful instrument.
 I imagine moving beyond 2D dashboards to overlaying real-time predictive analytics directly onto a client's supply chain or machinery.
 AR would allow me to visualize complex 'Digital Twins' on-site, enabling immediate, data-driven management decisions right there.
