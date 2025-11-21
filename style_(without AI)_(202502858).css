@@ -20,7 +20,8 @@ body {
                         "playButton canvas"
                         "filters video"
                         "webRTC webRTC"
-                        "game game";
+                        "game game"
+                        "ar-section ar-section";
     grid-template-columns: 1fr 1fr;
     width: 100%;
     padding: 20px;
@@ -402,8 +403,54 @@ body {
     transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
+#ar-section {
+    grid-area: ar-section;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(231, 222, 212);
+    border-radius: 8px;
+    padding: 40px;
+    min-height: 150px;
+}
+
+#ar-section a {
+    text-decoration: none;
+    color: black;
+    padding: 20px 50px;
+    border-radius: 8px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba(250, 240, 230, 0.623);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#ar-section a:hover {
+    background-color: rgba(250, 240, 230, 0.923);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+@media screen and (max-width: 768px) {
     .container {
+        display: -webkit-grid;
+        display: grid;
+        -webkit-grid-template-areas:
+            "header"
+            "image"
+            "paragraph"
+            "links"
+            "gallerywrap"
+            "caption-box"
+            "playButton"
+            "canvas"
+            "filters"
+            "video"
+            "webRTC"
+            "game"
+            "ar-section";
         grid-template-areas:
             "header"
             "image"
@@ -415,31 +462,154 @@ body {
             "canvas"
             "filters"
             "video"
-            "videocall"
-            "chat-container"
-            "game";
+            "webRTC"
+            "game"
+            "ar-section";
+        -webkit-grid-template-columns: 1fr;
         grid-template-columns: 1fr;
-        grid-gap: 15px 0;
+        gap: 15px;
         padding: 10px;
     }
 
+    #webRTC {
+        -webkit-grid-template-areas: 
+            "button"
+            "video1"
+            "video2"
+            "chat";
+        grid-template-areas: 
+            "button"
+            "video1"
+            "video2"
+            "chat";
+        -webkit-grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
+    }
+
     #header {
-        font-size: 40px;
+        font-size: 2rem;
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    #paragraph {
+        font-size: 1.2rem;
+        padding: 20px;
+        min-height: auto;
+    }
+
+    #image {
+        padding: 20px;
+        min-height: auto;
+    }
+
+    #image img {
+        max-width: 100%;
+        height: auto;
     }
 
     #links {
+        -webkit-flex-direction: column;
         flex-direction: column;
+        padding: 20px;
+        min-height: auto;
+    }
+
+    #links a {
+        font-size: 1.1rem;
+        padding: 12px 20px;
     }
 
     #gallerywrap {
         padding: 20px 10px;
         gap: 10px;
-        min-height: 400px;
+        min-height: 300px;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .gallery img {
+        max-width: 100%;
+        height: auto;
     }
 
     .arrow-button {
-        font-size: 35px;
-        width: 55px;
-        height: 55px;
+        font-size: 25px;
+        width: 50px;
+        height: 50px;
+        padding: 10px;
+        -webkit-flex-shrink: 0;
+        flex-shrink: 0;
+    }
+
+    .arrow-button img {
+        width: 30px;
+        height: 30px;
+    }
+
+    #caption-box {
+        padding: 15px;
+        font-size: 1rem;
+        min-height: auto;
+    }
+
+    .caption {
+        font-size: 1.1rem;
+    }
+
+    #playButton {
+        font-size: 1.1rem;
+        padding: 15px;
+    }
+
+    #canvas {
+        width: 100%;
+        height: 135px;
+    }
+
+    #filters {
+        padding: 15px;
+        gap: 10px;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .filter-btn {
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        width: 100%;
+    }
+
+    #video {
+        width: 100%;
+        height: auto;
+    }
+
+    #game, #ar-section {
+        padding: 20px;
+        min-height: auto;
+    }
+
+    #game a, #ar-section a {
+        font-size: 1.3rem;
+        padding: 15px 30px;
+    }
+
+    #chat-log {
+        height: 200px;
+    }
+
+    #chat-input {
+        width: calc(100% - 80px);
+        font-size: 16px;
+    }
+
+    .container > div {
+        font-size: 1.2rem;
+    }
+
+    #videos video {
+        width: 100%;
+        max-width: 100%;
     }
 }

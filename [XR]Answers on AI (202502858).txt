@@ -1,0 +1,23 @@
+PROMPT
+Create a carousel of 3D object I can visualize in augmented reality:
+    - I would like a nice selection, with 3D previews to understand clear the object
+    - The object will follow the theme of the personal page:
+        - Curiosity
+        - Food
+        - Music
+    - All of this should work with the Apple Quick Look and should create no problem with Safari
+
+
+1) This was definitely the hardest task to complete. I struggled significantly with iPhone compatibility and ran into many problems trying to fix it. 
+I tried using Firefox and other tools, but the WebXR examples simply wouldn't work. It wasn't until I searched for solutions on YouTube that 
+I understood the core issue: Apple has a closed ecosystem. Unlike Android, which handles standard AR easily, 
+iOS requires Apple's native Quick Look technology and specific .usdz file formats to display 3D models in the real world.
+
+2) While the AI helped set up the basic 3D viewer logic quickly, it actually hindered the mobile implementation. It kept confidently 
+suggesting standard WebXR code that is incompatible with iPhones, failing to mention Apple's proprietary ecosystem. 
+I wasted hours debugging its 'technically correct' code before manual research revealed I needed to totally switch to
+Apple's native Quick Look and .usdz files.
+
+3) As a management engineer with an ML background, I see AR as a useful instrument.
+I imagine moving beyond 2D dashboards to overlaying real-time predictive analytics directly onto a client's supply chain or machinery.
+AR would allow me to visualize complex 'Digital Twins' on-site, enabling immediate, data-driven management decisions right there.

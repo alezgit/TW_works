@@ -108,7 +108,7 @@ function startAudio() {
     }
 }
 
-const fileUrl = 'Trance Dance.mp3';
+const fileUrl = 'trancedance.mp3';
 loadAndVisualizeAudio(fileUrl).catch(console.error);
 
 let videoCanvas;
